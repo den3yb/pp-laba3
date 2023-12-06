@@ -6,6 +6,7 @@ from PyQt5.QtGui import QPalette, QColor, QFont
 from PyQt5.QtCore import Qt
 
 from exercises.exercise1 import task1
+from exercises.exercise2 import task2
 
 class window(QWidget):
     def __init__(self) -> None:
@@ -36,6 +37,7 @@ class window(QWidget):
         self.short_button = QPushButton(self)
         self.short_button.setText('Записать dataset в один файл')
         self.short_button.adjustSize()
+        self.short_button.clicked.connect(self.short)
         
         
 
@@ -78,19 +80,32 @@ class window(QWidget):
         self.setGeometry(0,0,1200,900)
         self.setWindowTitle("Otzovik")
 
+
     def chose(self) -> None:
         self.absolute = QFileDialog.getExistingDirectory(self, 'Select Folder of datasset')
 
+
+
     def create_anatation(self) -> None:
         self.annatation = QFileDialog.getExistingDirectory(self, 'Select Folder for annatation')
-        print(self.annatation)
         try:
             task1(self.absolute, self.annatation)
         except NotADirectoryError:
             print ("Некоректный адрес dataset, введите новый")
 
+
+
     def get(self) -> None:
-        self.new = QFileDialog.getExistingDirectory(self, 'Select directory for copy')
+        self.new_path = QFileDialog.getExistingDirectory(self, 'Select directory for copy')
+
+
+
+
+    def short(self) -> None:
+        try:
+            task2(self.absolute, self.new_path)
+        except AttributeError:
+            print ("Сначала укажите путь сохранения")
 
         
         

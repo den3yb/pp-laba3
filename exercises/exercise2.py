@@ -7,20 +7,20 @@ def get_rel(file_path:str,copy_path:str) -> str:
     rel=copy_path.replace(path,"")
     return rel
 
-def main(dataset:str,copy_path:str,name:str)->None:
+def task2(dataset:str,copy_path:str)->None:
     file_path = os.path.dirname(__file__)
-    f=open(name, "w")
+    path = os.path.join(copy_path,"short_dataset")
+    if not os.path.exists(path):
+        os.makedirs(path)
+    file = os.path.join(copy_path,"annotation_for_short.csv")
+    f=open(file, 'w')
     writer=csv.writer(f,delimiter=',',lineterminator='\n')
     for fold in os.listdir(dataset):
         for file in os.listdir(os.path.join(dataset,fold)):
             orig = os.path.join(dataset,fold,file)
-            new = os.path.join(copy_path,fold+"_"+file)
+            new = os.path.join(path,fold+"_"+file)
             shutil.copyfile(orig,new)
             relative = get_rel(file_path,new)
             row = [orig,relative,fold]
             writer.writerow(row)
 
-
-
-if __name__ == '__main__':
-    main("C:\Proganiy\Git PP\dataset","C:\Proganiy\pp-laba2\dataset_short","annotation_for_copy.csv")
