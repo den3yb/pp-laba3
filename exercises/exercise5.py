@@ -9,9 +9,8 @@ class otzovik:
         self.rait = rait
         self.limit = 0
         self.limit += len(os.listdir(os.path.join(dataset,rait)))
-        print("LIMIT:", self.limit)
         
-            
+    
             
        
     def __iter__(self):

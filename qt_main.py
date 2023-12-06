@@ -1,7 +1,8 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QMessageBox, QGridLayout,QFileDialog, QScrollArea
+from PyQt5.QtWidgets import *
+#QApplication, QWidget, QLabel, QPushButton, QMessageBox, QGridLayout,QFileDialog, QScrollArea, SetWordWrap
 from PyQt5.QtGui import QPalette, QColor, QFont
 from PyQt5.QtCore import Qt
 
@@ -28,6 +29,7 @@ class window(QWidget):
     def __init__(self) -> None:
         super(QWidget,self).__init__()
         self.setFont(QFont("Times", 10))
+        self.setStyleSheet("background: rgb(25,29,39); color: rgb(255,255,255)")
         
         self.dataset_button = QPushButton(self)
         self.dataset_button.setText('Укажите путь к dataset')
@@ -66,21 +68,24 @@ class window(QWidget):
         self.next_otzv = QPushButton(self)
         self.next_otzv.setText('Следующий отзыв ->')
         self.next_otzv.adjustSize()
+        self.next_otzv.clicked.connect(self.next_o)
         
         
 
         self.next_mark = QPushButton(self)
         self.next_mark.setText('Следующая оценка ->')
         self.next_mark.adjustSize()
+        self.next_mark.clicked.connect(self.next_m)
         
 
-        self.review_lab = ScrollLabel(self)
+        self.review_lab = QLabel(self)
+        self.review_lab.setText("Ожидания dataset...")
+        self.review_lab.setWordWrap(True)
+        self.review_lab.setStyleSheet(
+            "background: rgb(30,40,50); color: rgb(229, 220, 202); border: 5px, rgb(83,21,22);")
+        self.review_lab.setFont(QFont("Times", 10))
 
-        #qp=QPalette()
-        #qp.setColor(QPalette.Window, QColor(45,45,45))
-        #qp.setColor(QPalette.Button, QColor(67,124,144))
-        #qp.setColor(QPalette.ButtonText, QColor(250,131,52))
-        #self.setPalette(qp)
+        
         
         grid = QGridLayout(self)
     
@@ -93,11 +98,53 @@ class window(QWidget):
         grid.addWidget(self.next_mark,7,5)
         grid.addWidget(self.review_lab,0,1,6,7)
 
-        self.setGeometry(0,0,1200,900)
+        self.setGeometry(0,0,1000,1000)
         self.setWindowTitle("Otzovik")
 
     def chose(self) -> None:
         self.absolute = QFileDialog.getExistingDirectory(self, 'Select Folder of datasset')
+        self.one = otzovik(self.absolute, "1")
+        self.two = otzovik(self.absolute, "2")
+        self.tree = otzovik(self.absolute, "3")
+        self.four = otzovik(self.absolute, "4")
+        self.five = otzovik(self.absolute, "5")
+        self.count = 1
+        self.next_o()
+        
+        
+    def next_o(self) -> None:
+        print("sledyushiy otzuv")
+        if (self.count == 1):
+            f = open(next(self.one), "r", encoding="utf-8")
+            otz = " ".join(f)
+            self.review_lab.setText(otz) 
+        elif (self.count == 2):
+            f = open(next(self.two), "r", encoding="utf-8")
+            otz = " ".join(f)
+            self.review_lab.setText(otz) 
+        elif (self.count == 3):
+            f = open(next(self.tree), "r", encoding="utf-8")
+            otz = " ".join(f)
+            self.review_lab.setText(otz)
+        elif (self.count == 4):
+            f = open(next(self.four), "r", encoding="utf-8")
+            otz = " ".join(f)
+            self.review_lab.setText(otz)
+        elif (self.count == 5):
+            f = open(next(self.five), "r", encoding="utf-8")
+            otz = " ".join(f)
+            self.review_lab.setText(otz) 
+        
+        
+    def next_m(self):
+        if (self.count + 1> 5):
+            print("Отзывов с большей оценкой нет")
+            return
+        else:
+            self.count += 1
+            self.next_o()
+            
+    
 
     def create_anatation(self) -> None:
         self.annatation = QFileDialog.getExistingDirectory(self, 'Select Folder for annatation')
@@ -121,6 +168,7 @@ class window(QWidget):
         except AttributeError:
             print ("Сначала укажите путь сохранения")
 
+    
         
         
         
