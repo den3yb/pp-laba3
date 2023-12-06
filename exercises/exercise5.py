@@ -1,6 +1,6 @@
 import os
 
-from exercise4 import get
+from exercises.exercise4 import get
 
 class otzovik:
     def __init__(self,dataset:str,rait:str):
@@ -25,7 +25,3 @@ class otzovik:
         else:
             raise StopIteration
 
-test = otzovik("C:\Proganiy\Git PP\dataset","5")
-
-for val in test:
-    print(val)

@@ -9,9 +9,13 @@ def get_rel(file_path:str,copy_path:str) -> str:
     return rel
 
 
-def main(dataset:str,copy_path:str,name:str):
+def task3(dataset:str,copy_path:str,):
     file_path = os.path.dirname(__file__)
-    f=open(name, "w")
+    path = os.path.join(copy_path,"random_dataset")
+    if not os.path.exists(path):
+        os.makedirs(path)
+    file = os.path.join(copy_path,"annotation_for_random.csv")
+    f=open(file, 'w')
     writer=csv.writer(f,delimiter=',',lineterminator='\n')
     random_list = random.sample(list(range(1,10000)),3000)
     count = 0
@@ -19,12 +23,11 @@ def main(dataset:str,copy_path:str,name:str):
     for fold in os.listdir(dataset):
         for file in os.listdir(os.path.join(dataset,fold)):
             orig = os.path.join(dataset,fold,file)
-            copy = os.path.join(copy_path,str(random_list[count]))
+            copy = os.path.join(path,str(random_list[count]))
             count += 1
             relative = get_rel(file_path, copy)
             shutil.copyfile(orig,copy)
             writer.writerow([orig,relative,fold])
 
 
-if __name__ == '__main__':
-    main("C:\Proganiy\Git PP\dataset","C:\Proganiy\pp-laba2\dataset_random","annotation_for_random.csv")
+#"annotation_for_random.csv"
