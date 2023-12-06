@@ -3,7 +3,7 @@ import os
 
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QMessageBox
 
-def func():
+def dialog():
     mbox = QMessageBox()
     mbox.setText("setText")
     mbox.setDetailedText("detailed text")
@@ -22,6 +22,12 @@ def application():
     label.setText("Label text")
     label.move(100,100)
     label.show
+
+    btn=QPushButton(w)
+    btn.setText("buttom")
+    btn.move(100,120)
+    btn.show()
+    btn.clicked.connect(dialog)
 
     w.show()
     sys.exit(app.exec_())
