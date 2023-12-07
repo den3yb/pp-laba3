@@ -21,6 +21,9 @@ class ScrollLabel(QScrollArea):
         self.label = QLabel(text)
         self.label.setWordWrap(True)
         lay.addWidget(self.label)
+        self.label.setStyleSheet(
+            "background: rgb(30,40,50); color: rgb(229, 220, 202); border: 5px, rgb(83,21,22);")
+        self.label.setFont(QFont("Times", 10))
 
     def setText(self, text: str) -> None:
         self.label.setText(text)
@@ -78,12 +81,12 @@ class window(QWidget):
         self.next_mark.clicked.connect(self.next_m)
         
 
-        self.review_lab = QLabel(self)
+        self.review_lab = ScrollLabel(self)
         self.review_lab.setText("Ожидания dataset...")
-        self.review_lab.setWordWrap(True)
-        self.review_lab.setStyleSheet(
-            "background: rgb(30,40,50); color: rgb(229, 220, 202); border: 5px, rgb(83,21,22);")
-        self.review_lab.setFont(QFont("Times", 10))
+
+        self.star = QLabel(self)
+        
+        
 
         
         
@@ -96,7 +99,8 @@ class window(QWidget):
         grid.addWidget(self.random_button,5,0)
         grid.addWidget(self.next_otzv,7,4)
         grid.addWidget(self.next_mark,7,5)
-        grid.addWidget(self.review_lab,0,1,6,7)
+        grid.addWidget(self.review_lab,1,1,6,7)
+        grid.addWidget(self.star,0,1,1,6)
 
         self.setGeometry(0,0,1000,1000)
         self.setWindowTitle("Otzovik")
@@ -113,27 +117,31 @@ class window(QWidget):
         
         
     def next_o(self) -> None:
-        print("sledyushiy otzuv")
         if (self.count == 1):
             f = open(next(self.one), "r", encoding="utf-8")
             otz = " ".join(f)
-            self.review_lab.setText(otz) 
+            self.review_lab.setText(otz)
+            self.star.setText("Количество звёзд: ★")
         elif (self.count == 2):
             f = open(next(self.two), "r", encoding="utf-8")
             otz = " ".join(f)
-            self.review_lab.setText(otz) 
+            self.review_lab.setText(otz)
+            self.star.setText("Количество звёзд: ★★") 
         elif (self.count == 3):
             f = open(next(self.tree), "r", encoding="utf-8")
             otz = " ".join(f)
             self.review_lab.setText(otz)
+            self.star.setText("Количество звёзд: ★★★")
         elif (self.count == 4):
             f = open(next(self.four), "r", encoding="utf-8")
             otz = " ".join(f)
             self.review_lab.setText(otz)
+            self.star.setText("Количество звёзд: ★★★★")
         elif (self.count == 5):
             f = open(next(self.five), "r", encoding="utf-8")
             otz = " ".join(f)
-            self.review_lab.setText(otz) 
+            self.review_lab.setText(otz)
+            self.star.setText("Количество звёзд: ★★★★★") 
         
         
     def next_m(self):
