@@ -38,6 +38,9 @@ class window(QWidget):
         self.dataset_button.setText('Укажите путь к dataset')
         self.dataset_button.adjustSize()
         self.dataset_button.clicked.connect(self.chose)
+        self.dataset_button.setStyleSheet(
+            "background: rgb(40,50,60); color: rgb(229, 220, 202);")
+        self.dataset_button.setFont(QFont("Times", 13))
         #self.dataset_button.setStyleSheet("QPushButton {background-color: rgb(67,124,144), color: rgb(250, 131,52)}")
         
         
@@ -46,19 +49,27 @@ class window(QWidget):
         self.annotation_button.setText('Создать аннотацию к dataset')
         self.annotation_button.adjustSize()
         self.annotation_button.clicked.connect(self.create_anatation)
-
+        self.annotation_button.setStyleSheet(
+            "background: rgb(40,50,60); color: rgb(229, 220, 202);")
+        self.annotation_button.setFont(QFont("Times", 13))
        
 
         self.direct_button = QPushButton(self)
         self.direct_button.setText('Задать адрес сохранения копий')
         self.direct_button.adjustSize()
         self.direct_button.clicked.connect(self.get)
+        self.direct_button.setStyleSheet(
+            "background: rgb(40,50,60); color: rgb(229, 220, 202);")
+        self.direct_button.setFont(QFont("Times", 13))
         
 
         self.short_button = QPushButton(self)
         self.short_button.setText('Записать dataset в один файл')
         self.short_button.adjustSize()
         self.short_button.clicked.connect(self.short)
+        self.short_button.setStyleSheet(
+            "background: rgb(40,50,60); color: rgb(229, 220, 202);")
+        self.short_button.setFont(QFont("Times", 13))
         
         
 
@@ -66,12 +77,18 @@ class window(QWidget):
         self.random_button.setText('Сделать dataset рандомным')
         self.random_button.adjustSize()
         self.random_button.clicked.connect(self.randam)
+        self.random_button.setStyleSheet(
+            "background: rgb(40,50,60); color: rgb(229, 220, 202);")
+        self.random_button.setFont(QFont("Times", 13))
         
 
         self.next_otzv = QPushButton(self)
         self.next_otzv.setText('Следующий отзыв ->')
         self.next_otzv.adjustSize()
         self.next_otzv.clicked.connect(self.next_o)
+        self.next_otzv.setStyleSheet(
+            "background: rgb(40,50,60); color: rgb(229, 220, 202);")
+        self.next_otzv.setFont(QFont("Times", 13))
         
         
 
@@ -79,6 +96,9 @@ class window(QWidget):
         self.next_mark.setText('Следующая оценка ->')
         self.next_mark.adjustSize()
         self.next_mark.clicked.connect(self.next_m)
+        self.next_mark.setStyleSheet(
+            "background: rgb(40,50,60); color: rgb(229, 220, 202);")
+        self.next_mark.setFont(QFont("Times", 13))
         
 
         self.review_lab = ScrollLabel(self)
@@ -92,15 +112,15 @@ class window(QWidget):
         
         grid = QGridLayout(self)
     
-        grid.addWidget(self.dataset_button,0,0)
-        grid.addWidget(self.annotation_button,1,0)
+        grid.addWidget(self.dataset_button,1,0)
+        grid.addWidget(self.annotation_button,2,0)
         grid.addWidget(self.direct_button,3,0)
         grid.addWidget(self.short_button,4,0)
         grid.addWidget(self.random_button,5,0)
         grid.addWidget(self.next_otzv,7,4)
         grid.addWidget(self.next_mark,7,5)
-        grid.addWidget(self.review_lab,1,1,6,7)
-        grid.addWidget(self.star,0,1,1,6)
+        grid.addWidget(self.review_lab,2,2,5,6)
+        grid.addWidget(self.star,1,2,1,6)
 
         self.setGeometry(0,0,1000,1000)
         self.setWindowTitle("Otzovik")
@@ -117,41 +137,45 @@ class window(QWidget):
         
         
     def next_o(self) -> None:
-        if (self.count == 1):
-            f = open(next(self.one), "r", encoding="utf-8")
-            otz = " ".join(f)
-            self.review_lab.setText(otz)
-            self.star.setText("Количество звёзд: ★")
-        elif (self.count == 2):
-            f = open(next(self.two), "r", encoding="utf-8")
-            otz = " ".join(f)
-            self.review_lab.setText(otz)
-            self.star.setText("Количество звёзд: ★★") 
-        elif (self.count == 3):
-            f = open(next(self.tree), "r", encoding="utf-8")
-            otz = " ".join(f)
-            self.review_lab.setText(otz)
-            self.star.setText("Количество звёзд: ★★★")
-        elif (self.count == 4):
-            f = open(next(self.four), "r", encoding="utf-8")
-            otz = " ".join(f)
-            self.review_lab.setText(otz)
-            self.star.setText("Количество звёзд: ★★★★")
-        elif (self.count == 5):
-            f = open(next(self.five), "r", encoding="utf-8")
-            otz = " ".join(f)
-            self.review_lab.setText(otz)
-            self.star.setText("Количество звёзд: ★★★★★") 
-        
+        try:
+            if (self.count == 1):
+                f = open(next(self.one), "r", encoding="utf-8")
+                otz = " ".join(f)
+                self.review_lab.setText(otz)
+                self.star.setText("Количество звёзд: ★")
+            elif (self.count == 2):
+                f = open(next(self.two), "r", encoding="utf-8")
+                otz = " ".join(f)
+                self.review_lab.setText(otz)
+                self.star.setText("Количество звёзд: ★★") 
+            elif (self.count == 3):
+                f = open(next(self.tree), "r", encoding="utf-8")
+                otz = " ".join(f)
+                self.review_lab.setText(otz)
+                self.star.setText("Количество звёзд: ★★★")
+            elif (self.count == 4):
+                f = open(next(self.four), "r", encoding="utf-8")
+                otz = " ".join(f)
+                self.review_lab.setText(otz)
+                self.star.setText("Количество звёзд: ★★★★")
+            elif (self.count == 5):
+                f = open(next(self.five), "r", encoding="utf-8")
+                otz = " ".join(f)
+                self.review_lab.setText(otz)
+                self.star.setText("Количество звёзд: ★★★★★") 
+        except AttributeError:
+            print ("Сначала укажите путь dataset")
         
     def next_m(self):
-        if (self.count + 1> 5):
-            print("Отзывов с большей оценкой нет")
-            return
-        else:
-            self.count += 1
-            self.next_o()
-            
+        try:
+            if (self.count + 1> 5):
+                print("Отзывов с большей оценкой нет")
+                return
+            else:
+                self.count += 1
+                self.next_o()
+        except AttributeError:
+            print ("Сначала укажите путь dataset")    
     
 
     def create_anatation(self) -> None:
