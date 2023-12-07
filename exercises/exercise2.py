@@ -23,5 +23,4 @@ def task2(dataset: str, copy_path: str) -> None:
             new = os.path.join(path, fold + "_" + file)
             shutil.copyfile(orig, new)
             relative = get_rel(file_path, new)
-            row = [orig, relative, fold]
-            writer.writerow(row)
+            writer.writerow([orig, relative, fold])

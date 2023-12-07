@@ -12,7 +12,7 @@ from exercises.exercise3 import task3
 from exercises.exercise5 import otzovik
 
 
-class ScrollLabel(QScrollArea):
+class Scroll(QScrollArea):
     def __init__(self, *args, **kwargs) -> None:
         QScrollArea.__init__(self, *args, **kwargs)
         self.setWidgetResizable(True)
@@ -100,7 +100,7 @@ class window(QWidget):
         )
         self.next_mark.setFont(QFont("Times", 13))
 
-        self.review_lab = ScrollLabel(self)
+        self.review_lab = Scroll(self)
         self.review_lab.setText("Ожидание dataset'а...")
 
         self.star = QLabel(self)
@@ -134,7 +134,7 @@ class window(QWidget):
             self.next_o()
         except FileNotFoundError:
             QMessageBox.warning(
-                self, "Внимание", "Неуказан или указан неверно путь dataset"
+                self, "Внимание", "Неуказан путь dataset"
             )
 
     def next_o(self) -> None:
