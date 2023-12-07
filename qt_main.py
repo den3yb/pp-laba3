@@ -126,14 +126,18 @@ class window(QWidget):
         self.setWindowTitle("Otzovik")
 
     def chose(self) -> None:
-        self.absolute = QFileDialog.getExistingDirectory(self, 'Select Folder of datasset')
-        self.one = otzovik(self.absolute, "1")
-        self.two = otzovik(self.absolute, "2")
-        self.tree = otzovik(self.absolute, "3")
-        self.four = otzovik(self.absolute, "4")
-        self.five = otzovik(self.absolute, "5")
-        self.count = 1
-        self.next_o()
+        try:
+            self.absolute = QFileDialog.getExistingDirectory(self, 'Select Folder of datasset')
+            self.one = otzovik(self.absolute, "1")
+            self.two = otzovik(self.absolute, "2")
+            self.tree = otzovik(self.absolute, "3")
+            self.four = otzovik(self.absolute, "4")
+            self.five = otzovik(self.absolute, "5")
+            self.count = 1
+            self.next_o()
+        except FileNotFoundError:
+            QMessageBox.warning(self,"Внимание","Неуказан или указан неверно путь dataset") 
+        
         
         
     def next_o(self) -> None:
@@ -164,26 +168,29 @@ class window(QWidget):
                 self.review_lab.setText(otz)
                 self.star.setText("Количество звёзд: ★★★★★") 
         except AttributeError:
-            print ("Сначала укажите путь dataset")
+            QMessageBox.warning(self,"Внимание","Неуказан или указан неверно путь dataset") 
         
     def next_m(self):
         try:
             if (self.count + 1> 5):
-                print("Отзывов с большей оценкой нет")
+                QMessageBox.warning(self,"Внимание","Достигнут лимит по рейтингу отзывов") 
                 return
             else:
                 self.count += 1
                 self.next_o()
-        except AttributeError:
-            print ("Сначала укажите путь dataset")    
+        except AttributeError: 
+            QMessageBox.warning(self,"Внимание","Неуказан или указан неверно путь dataset")  
     
 
     def create_anatation(self) -> None:
-        self.annatation = QFileDialog.getExistingDirectory(self, 'Select Folder for annatation')
         try:
-            task1(self.absolute, self.annatation)
-        except NotADirectoryError:
-            print ("Некоректный адрес dataset, введите новый")
+            self.annatation = QFileDialog.getExistingDirectory(self, 'Select Folder for annatation')
+            try:
+                task1(self.absolute, self.annatation)
+            except NotADirectoryError:
+                QMessageBox.warning(self,"Внимание","Некоректный адрес dataset, введите новый")
+        except AttributeError:
+            QMessageBox.warning(self,"Внимание","Не указан или указан не верно путь dataset")
 
     def get(self) -> None:
         self.new_path = QFileDialog.getExistingDirectory(self, 'Select directory for copy')
@@ -192,13 +199,13 @@ class window(QWidget):
         try:
             task2(self.absolute, self.new_path)
         except AttributeError:
-            print ("Сначала укажите путь сохранения")
+            QMessageBox.warning(self,"Внимание","Не указан путь для копирования или dataset") 
 
     def randam(self) -> None:
         try:
             task3(self.absolute, self.new_path)
         except AttributeError:
-            print ("Сначала укажите путь сохранения")
+            QMessageBox.warning(self,"Внимание","Не указан путь для копирования или dataset") 
 
     
         
